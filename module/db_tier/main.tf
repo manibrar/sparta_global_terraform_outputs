@@ -1,7 +1,3 @@
-provider "aws" {
-  region  = "eu-west-1"
-}
-
 # create a vpc
 resource "aws_vpc" "db" {
   cidr_block = "${var.cidr_block}"
@@ -33,7 +29,7 @@ resource "aws_security_group" "db"  {
     from_port       = "27017"
     to_port         = "27017"
     protocol        = "tcp"
-    security_groups = ["${aws_security_group.db.id}"]
+    security_groups = ["${aws_security_group.app.id}"]
   }
 
   egress {
@@ -55,7 +51,7 @@ resource "aws_network_acl" "db" {
     protocol   = "tcp"
     rule_no    = 100
     action     = "allow"
-    cidr_block = "${aws_subnet.db.cidr_block}"
+    cidr_block = "${aws_subnet.app.cidr_block}"
     from_port  = 27017
     to_port    = 27017
   }
@@ -66,7 +62,7 @@ resource "aws_network_acl" "db" {
     protocol   = "tcp"
     rule_no    = 120
     action     = "allow"
-    cidr_block = "${aws_subnet.db.cidr_block}"
+    cidr_block = "${aws_subnet.app.cidr_block}"
     from_port  = 1024
     to_port    = 65535
   }

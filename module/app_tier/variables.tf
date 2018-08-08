@@ -11,9 +11,6 @@ variable "app_ami_id" {
   description = "ami"
 }
 
-variable "db_ami_id" {
-  description = "dbami"
-}
 
 variable "cidr_block" {
   description = "cidr"
