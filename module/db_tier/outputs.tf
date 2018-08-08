@@ -1,4 +1,4 @@
-output "app_vpc_id" {
+output "vpc_id" {
 description = "vpc of app"
   value = "${aws_vpc.app.id}"
 
