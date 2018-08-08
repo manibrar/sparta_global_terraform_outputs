@@ -13,3 +13,7 @@ variable "db_ami_id" {
 variable "cidr_block" {
   description = "cidr"
 }
+
+variable "app_sec" {
+  description = "app security group"
+}

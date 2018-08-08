@@ -15,3 +15,7 @@ variable "app_ami_id" {
 variable "cidr_block" {
   description = "cidr"
 }
+
+variable "privateip" {
+  description = "private ip"
+  }

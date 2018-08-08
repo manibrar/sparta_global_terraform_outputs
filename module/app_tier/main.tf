@@ -125,7 +125,7 @@ resource "aws_route_table_association" "app" {
 data "template_file" "app_init" {
    template = "${file("./scripts/app/init.sh.tpl")}"
    vars {
-      db_host="mongodb://${aws_instance.db.private_ip}:27017/posts"
+      db_host="mongodb://${var.privateip}:27017/posts"
    }
 }
 
