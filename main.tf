@@ -18,11 +18,12 @@ resource "aws_route53_record" "www" {
   name    = "manvir.spartaglobal.education"
   type    = "A"
   ttl     = "300"
-  records = ["${aws_elb.Manvir_elb.id}"]
+  records = ["${aws_elb.Manvir_elb.dns_name}"]
 }
 
 
 # create an elb
+
 resource "aws_elb" "Manvir_elb" {
   name               = "manvir-terraform-elb"
   subnets = ["module.app_tier.app_subnet"]
