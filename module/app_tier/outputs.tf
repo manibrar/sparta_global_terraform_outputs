@@ -7,3 +7,8 @@ output "app_sec" {
    description = "foo"
    value ="${aws_security_group.app.id}"
 }
+
+output "app_subnet" {
+  description ="app subnet"
+  value = "${aws_subnet.app.id}"
+}
