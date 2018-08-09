@@ -1,11 +1,3 @@
-# create a vpc
-resource "aws_vpc" "db" {
-  cidr_block = "${var.cidr_block}"
-
-  tags {
-    Name = "${var.name}"
-  }
-}
 
 # DB
 # create a subnet

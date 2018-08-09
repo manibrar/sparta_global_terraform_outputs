@@ -1,11 +1,4 @@
-# create a vpc
-resource "aws_vpc" "app" {
-  cidr_block = "${var.cidr_block}"
 
-  tags {
-    Name = "${var.name}"
-  }
-}
 
 
 # internet gateway

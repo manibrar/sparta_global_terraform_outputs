@@ -1,9 +1,3 @@
-output "vpc_id" {
-description = "vpc of app"
-  value = "${aws_vpc.db.id}"
-
-}
-
 output "db_ami" {
    description = "foo"
    value ="ami-01020378"

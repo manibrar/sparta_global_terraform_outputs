@@ -1,7 +1,3 @@
-variable "vpc_id" {
-  description = "the name of the resource"
-}
-
 variable "name" {
   description = "the name of the resource"
 
@@ -19,3 +15,7 @@ variable "cidr_block" {
 variable "privateip" {
   description = "private ip"
   }
+
+variable "vpc_id" {
+  description = "vpc id"
+}
