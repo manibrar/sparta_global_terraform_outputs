@@ -16,46 +16,60 @@ resource "aws_vpc" "main" {
 resource "aws_route53_record" "www" {
   zone_id = "Z3CCIZELFLJ3SC"
   name    = "manvir.spartaglobal.education"
-  type    = "A"
+  type    = "CNAME"
   ttl     = "300"
   records = ["${aws_elb.Manvir_elb.dns_name}"]
 }
 
+# security
+resource "aws_security_group" "elb"  {
+  name = "${var.name}"
+  description = "${var.name} access"
+  vpc_id = "${aws_vpc.main.id}"
+
+  ingress {
+    from_port       = "80"
+    to_port         = "80"
+    protocol        = "tcp"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+  tags {
+    Name = "${var.name}"
+  }
+}
 
 # create an elb
 
 resource "aws_elb" "Manvir_elb" {
   name               = "manvir-terraform-elb"
-  subnets = ["module.app_tier.app_subnet"]
-
-  access_logs {
-    bucket        = "manvir-elb"
-    interval      = 60
-  }
+  subnets = ["${module.app_tier.app_subnet}"]
+  security_groups = ["${aws_security_group.elb.id}"]
 
   listener {
-    instance_port     = 8000
+    instance_port     = 80
     instance_protocol = "http"
     lb_port           = 80
     lb_protocol       = "http"
   }
 
-  listener {
-    instance_port      = 8000
-    instance_protocol  = "http"
-    lb_port            = 443
-    lb_protocol        = "http"
-  }
 
   health_check {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3
-    target              = "HTTP:8000/"
+    target              = "HTTP:80/"
     interval            = 30
   }
 
-  instances                   = ["${module.app_tier.app_ami}"]
+  instances                   = ["${module.app_tier.app_id}"]
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
@@ -72,6 +86,7 @@ module "app_tier" {
   app_ami_id ="${module.app_tier.app_ami}"
   cidr_block ="10.0.0.0/16"
   privateip = "${module.db_tier.db_privateip}"
+  elb_sec = "${aws_security_group.elb.id}"
 }
 
 module "db_tier" {

@@ -12,3 +12,8 @@ output "app_subnet" {
   description ="app subnet"
   value = "${aws_subnet.app.id}"
 }
+
+output "app_id" {
+  description = "app id"
+  value = "${aws_instance.app.id}"
+}

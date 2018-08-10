@@ -19,3 +19,8 @@ variable "privateip" {
 variable "vpc_id" {
   description = "vpc id"
 }
+
+variable "elb_sec" {
+  description = "elb security group"
+
+}
